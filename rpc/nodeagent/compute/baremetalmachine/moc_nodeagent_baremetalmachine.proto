@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the Apache v2.0 license.
+
+syntax = "proto3";
+option go_package = "github.com/microsoft/moc/rpc/nodeagent/compute";
+
+package moc.nodeagent.compute;
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+import "moc_common_common.proto";
+import "moc_common_computecommon.proto";
+import "moc_nodeagent_virtualmachine.proto";
+
+message BareMetalMachineRequest {
+	repeated BareMetalMachine BareMetalMachines = 1;
+	Operation OperationType = 2;
+}
+
+message BareMetalMachineResponse {
+	repeated BareMetalMachine BareMetalMachines = 1;
+	google.protobuf.BoolValue Result = 2;
+	string  Error = 3;
+}
+
+message BareMetalMachineOperatingSystemConfiguration {
+	string computerName = 1;
+	UserConfiguration administrator = 2;
+	repeated UserConfiguration users = 3;
+	string customData = 4;
+	repeated SSHPublicKey publicKeys = 5;
+	LinuxConfiguration linuxConfiguration = 6;
+}
+
+message BareMetalMachine {
+	string name = 1;
+	string id = 2;
+	BareMetalMachineOperatingSystemConfiguration os = 3;
+	string groupName = 4;
+	Status status = 5;
+	Tags tags = 6;
+}
+
+service BareMetalMachineAgent {
+	rpc Invoke(BareMetalMachineRequest) returns (BareMetalMachineResponse) {}
+}
