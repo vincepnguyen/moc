@@ -12,12 +12,12 @@ import "moc_common_computecommon.proto";
 import "moc_nodeagent_virtualmachine.proto";
 
 message BareMetalMachineRequest {
-	repeated BareMetalMachine BareMetalMachines = 1;
+	BareMetalMachine bareMetalMachine = 1;
 	Operation OperationType = 2;
 }
 
 message BareMetalMachineResponse {
-	repeated BareMetalMachine BareMetalMachines = 1;
+	BareMetalMachine bareMetalMachine = 1;
 	google.protobuf.BoolValue Result = 2;
 	string  Error = 3;
 }
@@ -37,7 +37,8 @@ message BareMetalMachine {
 	BareMetalMachineOperatingSystemConfiguration os = 3;
 	string groupName = 4;
 	Status status = 5;
-	Tags tags = 6;
+	Entity entity = 6;
+	Tags tags = 7;
 }
 
 service BareMetalMachineAgent {
